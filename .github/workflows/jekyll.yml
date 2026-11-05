@@ -1,10 +1,10 @@
-name: Build Jekyll site
+name: Build and Deploy Jekyll Site
 
 on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -37,8 +37,12 @@ jobs:
         env:
           JEKYLL_ENV: production
 
-      - name: Upload built site
-        uses: actions/upload-artifact@v4
+      - name: Deploy generated site to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          name: site-build
-          path: _site
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          publish_branch: gh-pages
+          force_orphan: true
+          enable_jekyll: false
+          commit_message: "Deploy site from ${{ github.sha }}"
