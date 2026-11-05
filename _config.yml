@@ -87,8 +87,7 @@ kramdown:
 
 collections:
   publications:
-    output: true
-    permalink: /:collection/:path/
+    output: false
 
 defaults:
   - scope:
